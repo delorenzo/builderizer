@@ -3,10 +3,14 @@ body {
 	background: #3f3f3f;
 	color: white;
 	font-family: 'Slabo 27px', sans-serif;
+	overflow-y: scroll;
+	margin: 0px;
+	padding: 0px;
 }
 
-h1 {
-	color: #ff3d00;
+#title {
+	color: white;
+	padding: 8px;
 }
 
 textarea {
@@ -14,6 +18,7 @@ textarea {
 	overflow: scroll;
 	resize: none;
 	padding: 12px;
+	font-size: 12px;
 }
 
 primary{opacity:1;}
@@ -24,18 +29,31 @@ button {
 	font-family: 'Slabo 27px', sans-serif;
 	margin: 20px auto 20px auto;
 	display: block;
+	box-shadow: 0px 2px 4px black;
+	font-size: 13px;
 }
 
 div#heading {
+	text-align: center;
+	width: 100%;
 	margin: 0px;
 	padding: 0px;
 	border: none;
-	height: 100px;
-	background: #ff3d00;
-	color: white;
+	height: 60px;
+	box-shadow: 0px 5px 30px black;
+	background: #FF5722;
+	display: block;
 }
 
-div {
+div#mainContent{
+	margin-top: 24px;
+}
+
+div#outputContainer {
+	margin: 16px;
+}
+
+div#inputContainer {
 	margin: 16px;
 }
 

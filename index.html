@@ -7,17 +7,19 @@
 		<link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
 	</head>
 	<body>
-		<div id="main-content">
-			<h1>builderizer</h1>
+		<div id="heading">
+			<h1 id="title">builderizer</h1>
+		</div>
+		<div id="mainContent">
 			<secondary>Easily generate Builder implementations for your Java classes</secondary>
-			<div>
+			<div id="inputContainer">
 				<textarea autofocus="true" required="true" placeholder="Paste class here" rows="20" cols="80" id="input"></textarea>
 			</div>
 
 			<button id="builderize">Builderize</button>
 			<button id="copy">Copy to Clipboard</button>
 
-			<div>
+			<div id="outputContainer">
 				<textarea readonly="true" id="output" rows="20" cols="80"></textarea>
 			</div>
 		</div>
