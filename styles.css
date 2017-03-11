@@ -2,6 +2,7 @@ body {
 	text-align: center;
 	background: #3f3f3f;
 	color: white;
+	font-family: 'Slabo 27px', sans-serif;
 }
 
 h1 {
@@ -9,6 +10,7 @@ h1 {
 }
 
 textarea {
+	font-family: 'Slabo 27px', sans-serif;
 	overflow: scroll;
 	resize: none;
 	padding: 12px;
@@ -19,6 +21,7 @@ secondary{opacity:0.7;}
 disabled{opacity:0.5;}
 
 button {
+	font-family: 'Slabo 27px', sans-serif;
 	margin: 20px auto 20px auto;
 	display: block;
 }
@@ -32,17 +35,9 @@ div#heading {
 	color: white;
 }
 
-div#main-content {
-	margin: 16px;
-}
-
-div#input {
+div {
 	margin: 16px;
 }
 
 button#builderize {
-}
-
-div#output {
-	margin: 16px;
 }
