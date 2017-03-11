@@ -1,0 +1,49 @@
+body {
+	text-align: center;
+	background: #3f3f3f;
+	color: white;
+}
+
+h1 {
+	color: #ff3d00;
+}
+
+textarea {
+	overflow: scroll;
+	resize: none;
+	padding: 12px;
+}
+
+primary{opacity:1;}
+secondary{opacity:0.7;}
+disabled{opacity:0.5;}
+
+button {
+	margin: 20px auto 20px auto;
+	display: block;
+	box-shadow: 2px 2px 2px #a8a8a8;
+}
+
+div#heading {
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	height: 100px;
+	background: #ff3d00;
+	color: white;
+}
+
+div#main-content {
+	margin: 16px;
+}
+
+div#input {
+	margin: 16px;
+}
+
+button#builderize {
+}
+
+div#output {
+	margin: 16px;
+}
