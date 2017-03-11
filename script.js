@@ -12,20 +12,21 @@ jQuery(document).ready(function() {
 
 //attempt to copy to clipboard.  not universally supported.
 function copyToClipboard(text) {
-	jQuery('textarea#ouput').select();
-	try {
-		if (document.execCommand('copy')) {
-			console.log('Copied to clipboard.')
-		} else {
-			promptForCopy(text);
-		}
-	} catch (err) {
-		promptForCopy(text);
+	jQuery('textarea#output').select();
+	if (document.execCommand('copy')) {
+		displayToast("Copied to clipboard.");
+	} else {
+		displayToast("Unable to copy.");
 	}
 }
 
-function promptForCopy(text) {
-	window.prompt("Copy to clipboard: CMD/Ctrl+C, Enter", text);
+function displayToast(message) {
+	var toast = jQuery('#toast');
+	toast.text(message);
+	toast.fadeIn();
+	setTimeout(function() {
+		toast.fadeOut();
+	}, 1500);
 }
 
 function builderize() {

@@ -11,6 +11,8 @@ body {
 #title {
 	color: white;
 	padding: 8px;
+	text-align: center;
+	margin: auto;
 }
 
 textarea {
@@ -19,6 +21,22 @@ textarea {
 	resize: none;
 	padding: 12px;
 	font-size: 12px;
+}
+
+#toast {
+    display: none;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
 }
 
 primary{opacity:1;}
@@ -34,28 +52,38 @@ button {
 }
 
 div#heading {
-	text-align: center;
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
+	top: 0px;
 	border: none;
 	height: 60px;
 	box-shadow: 0px 5px 30px black;
 	background: #FF5722;
-	display: block;
+	position: fixed;
+	z-index: 1;
 }
 
 div#mainContent{
-	margin-top: 24px;
+	left: 50%;
+	margin-top: 84px;
 }
 
 div#outputContainer {
+	left: 50%;
 	margin: 16px;
 }
 
 div#inputContainer {
+	left: 50%;
 	margin: 16px;
 }
 
 button#builderize {
 }
+
+
+
+
+
+
