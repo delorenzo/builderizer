@@ -1,27 +1,51 @@
 var indent = "\t"; 
 var carriageReturn = "\r\n";
     
-$(document).ready(function() {
-	$('button#builderize').click(function() {
+jQuery(document).ready(function() {
+	jQuery('button#builderize').click(function() {
 		builderize();
+	});
+	jQuery('button#copy').click(function() {
+		copyToClipboard(jQuery('textarea#output').val());
 	});
 });
 
+//attempt to copy to clipboard.  not universally supported.
+function copyToClipboard(text) {
+	jQuery('textarea#ouput').select();
+	try {
+		if (document.execCommand('copy')) {
+			console.log('Copied to clipboard.')
+		} else {
+			promptForCopy(text);
+		}
+	} catch (err) {
+		promptForCopy(text);
+	}
+}
+
+function promptForCopy(text) {
+	window.prompt("Copy to clipboard: CMD/Ctrl+C, Enter", text);
+}
+
 function builderize() {
 	var match;
-	var input = $('textarea#input').val();
-	var pattern =/^((?:public|private|protected)? class (\w+)(?: extends \w+)?(?: implements \w+)? ?{)([\w\s;]+)(})$/;
+	var input = jQuery('textarea#input').val();
+	var pattern =/^((?:public |private |protected )?class (\w+)(?: extends \w+)?(?: implements \w+)? ?{)([\w\s;]+)(})$/;
 	var output = [];
 	if (match = input.match(pattern)) {
 		output.push(match[1], match[3]);
 		fields = parseFieldsFromClassBody(match[3]);
+		if (fields.length == 0) {
+			jQuery('textarea#output').val("No fields to builderize found.  :(")
+			return;
+		}
 		constructor = createConstructor(match[2], fields);
 		builderClass = createBuilderClass(match[2], fields);
 		output.push(carriageReturn, constructor, carriageReturn, builderClass, match[4]);
-		$('textarea#output').val(output.join(""));
+		jQuery('textarea#output').val(output.join(""));
 	} else {
-		alert('Invalid class.');
-		$('textarea#output').val("Failed to parse class.");
+		jQuery('textarea#output').val("Failed to parse class.");
 	}
 }
 
@@ -40,30 +64,30 @@ function parseFieldsFromClassBody(string) {
 function createConstructor(className, fields) {
 	var constructor = [];
 	constructor.push(
-		indent, "public ", className, "( ", className, "Builder builder", ")", "{\r\n");
+		indent, "public ", className, "(", className, "Builder builder", ") ", "{", carriageReturn);
 	for (var i = 0; i < fields.length; i++) {
 		var fieldName = fields[i].name;
-		constructor.push(indent, indent, "this.", fieldName, " = builder.", fieldName, ";\r\n");
+		constructor.push(indent, indent, "this.", fieldName, " = builder.", fieldName, ";", carriageReturn);
 	}
-	constructor.push(indent, "}\r\n");
+	constructor.push(indent, "}", carriageReturn);
 	return constructor.join("");
 }
 
 function createBuilderClass(className, fields) {
 	var builder = [];
 	var builderName = className + "Builder";
-	builder.push(indent, "public class ", builderName, "{\r\n");
+	builder.push(indent, "public class ", builderName, "{", carriageReturn);
 	for (var i = 0; i < fields.length; i++) {
 		var field = fields[i];
-		builder.push(indent, indent, "private ", field.type, " ", field.name, ";\r\n");
+		builder.push(indent, indent, "private ", field.type, " ", field.name, ";", carriageReturn);
 	}
-	builder.push(indent, indent, "public ", builderName, "() {}\r\n");
+	builder.push(indent, indent, "public ", builderName, "() {}", carriageReturn);
 	for (var i = 0; i < fields.length; i++) {
 		var field = fields[i];
 		builder.push(indent, indent, 
-			"public ", builderName, " set", field.name, "(", field.type, " ", field.name, ") { this.", field.name, " = ", field.name, "; return this; }\r\n")
+			"public ", builderName, " ", field.name, "(", field.type, " ", field.name, ") { this.", field.name, " = ", field.name, "; return this; }", carriageReturn)
 	}
-	builder.push(indent, indent, "public ", className, " build() { return new ", className, "(this); }\r\n");
-	builder.push(indent, "}\r\n");
+	builder.push(indent, indent, "public ", className, " build() { return new ", className, "(this); }", carriageReturn);
+	builder.push(indent, "}", carriageReturn);
 	return builder.join("");
 }
