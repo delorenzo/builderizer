@@ -32,18 +32,18 @@ function displayToast(message) {
 function builderize() {
 	var match;
 	var input = jQuery('textarea#input').val();
-	var pattern =/^((?:public |private |protected )?class (\w+)(?: extends \w+)?(?: implements \w+)? ?{)([\w\s;]+)(})$/;
+	var pattern =/^([\S\s]*)((?:public |private |protected )?class\s*(\w+)(?: extends \w+)?(?: implements \w+)?\s*{)([\S\s]+)(})$/;
 	var output = [];
 	if (match = input.match(pattern)) {
-		output.push(match[1], match[3]);
-		fields = parseFieldsFromClassBody(match[3]);
+		output.push(match[1], match[2], match[4]);
+		fields = parseFieldsFromClassBody(match[4]);
 		if (fields.length == 0) {
 			jQuery('textarea#output').val("No fields to builderize found.  :(")
 			return;
 		}
-		constructor = createConstructor(match[2], fields);
-		builderClass = createBuilderClass(match[2], fields);
-		output.push(carriageReturn, constructor, carriageReturn, builderClass, match[4]);
+		constructor = createConstructor(match[3], fields);
+		builderClass = createBuilderClass(match[3], fields);
+		output.push(carriageReturn, constructor, carriageReturn, builderClass, match[5]);
 		jQuery('textarea#output').val(output.join(""));
 	} else {
 		jQuery('textarea#output').val("Failed to parse class.");
@@ -54,8 +54,14 @@ function parseFieldsFromClassBody(string) {
 	var fields = [];
 	string.split(/\r?\n/).forEach(function(line) {
 		var match;
-		if (match = line.match(/^\s*(\w+) (\w+);\s*$/)) {		
-			field = {type: match[1], name: match[2]};
+		if (match = line.match(/^\s*(\w+) (\w+)\s?(\w+)?\s?(\w+)?;\s*$/)) {
+			if (match.length == 3) {		
+				field = {type: match[1], name: match[2]};
+			} else if (match.length == 4) {
+				field = {type: match[2], name: match[3]};
+			} else if (match.length == 5) {
+				field = {type: match[3], name: match[4]};
+			}
 			fields.push(field);
 		} 
 	});
