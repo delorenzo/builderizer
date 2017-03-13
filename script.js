@@ -54,14 +54,8 @@ function parseFieldsFromClassBody(string) {
 	var fields = [];
 	string.split(/\r?\n/).forEach(function(line) {
 		var match;
-		if (match = line.match(/^\s*(\w+) (\w+)\s?(\w+)?\s?(\w+)?;\s*$/)) {
-			if (match.length == 3) {		
-				field = {type: match[1], name: match[2]};
-			} else if (match.length == 4) {
-				field = {type: match[2], name: match[3]};
-			} else if (match.length == 5) {
-				field = {type: match[3], name: match[4]};
-			}
+		if (match = line.match(/^\s*(?:\w+\s)*([A-Z]\w+|int|long|char|boolean|float|byte|short|double)\s(\w+);\s*$/)) {
+			field = {type: match[1], name: match[2]};
 			fields.push(field);
 		} 
 	});
@@ -71,7 +65,7 @@ function parseFieldsFromClassBody(string) {
 function createConstructor(className, fields) {
 	var constructor = [];
 	constructor.push(
-		indent, "public ", className, "(", className, "Builder builder", ") ", "{", carriageReturn);
+		indent, "private ", className, "(", className, "Builder builder", ") ", "{", carriageReturn);
 	for (var i = 0; i < fields.length; i++) {
 		var fieldName = fields[i].name;
 		constructor.push(indent, indent, "this.", fieldName, " = builder.", fieldName, ";", carriageReturn);
@@ -83,7 +77,7 @@ function createConstructor(className, fields) {
 function createBuilderClass(className, fields) {
 	var builder = [];
 	var builderName = className + "Builder";
-	builder.push(indent, "public class ", builderName, "{", carriageReturn);
+	builder.push(indent, "public static class ", builderName, "{", carriageReturn);
 	for (var i = 0; i < fields.length; i++) {
 		var field = fields[i];
 		builder.push(indent, indent, "private ", field.type, " ", field.name, ";", carriageReturn);
