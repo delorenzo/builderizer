@@ -1,4 +1,4 @@
-var indent = "\t"; 
+var indent = "    "; //4 spaces
 var carriageReturn = "\r\n";
     
 jQuery(document).ready(function() {
@@ -54,7 +54,8 @@ function parseFieldsFromClassBody(string) {
 	var fields = [];
 	string.split(/\r?\n/).forEach(function(line) {
 		var match;
-		if (match = line.match(/^\s*(?:\w+\s)*([A-Z]\w+|int|long|char|boolean|float|byte|short|double)\s(\w+);\s*$/)) {
+		if (match = line.match(/^(\s*)(?:\w+\s)*([A-Z]\w+|int|long|char|boolean|float|byte|short|double)\s(\w+);\s*$/)) {
+			indent = match[1];
 			field = {type: match[1], name: match[2]};
 			fields.push(field);
 		} 
