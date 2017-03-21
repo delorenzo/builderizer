@@ -78,19 +78,24 @@ function createConstructor(className, fields) {
 function createBuilderClass(className, fields) {
 	var builder = [];
 	var builderName = className + "Builder";
-	builder.push(indent, "public static class ", builderName, "{", carriageReturn);
+	builder.push(indent, "public static final class ", builderName, "{", carriageReturn);
 	for (var i = 0; i < fields.length; i++) {
 		var field = fields[i];
 		builder.push(indent, indent, "private ", field.type, " ", field.name, ";", carriageReturn);
 	}
 	builder.push(carriageReturn);
-	builder.push(indent, indent, "public ", builderName, "() {}", carriageReturn);
+	builder.push(indent, indent, "public ", builderName, "() {}", carriageReturn, carriageReturn);
 	for (var i = 0; i < fields.length; i++) {
 		var field = fields[i];
-		builder.push(indent, indent, 
-			"public ", builderName, " ", field.name, "(", field.type, " ", field.name, ") { this.", field.name, " = ", field.name, "; return this; }", carriageReturn)
+		builder.push(
+			indent, indent, "public ", builderName, " ", field.name, "(", field.type, " ", field.name, ") {", carriageReturn, 
+			indent, indent, indent, "this.", field.name, " = ", field.name, ";", carriageReturn, 
+			indent, indent, indent, "return this;", carriageReturn,  
+			indent, indent, "}", carriageReturn, carriageReturn);
 	}
-	builder.push(indent, indent, "public ", className, " build() { return new ", className, "(this); }", carriageReturn);
+	builder.push(indent, indent, "public ", className, " build() {", carriageReturn,
+		indent, indent, indent, "return new ", className, "(this);", carriageReturn,
+		indent, indent, "}", carriageReturn);
 	builder.push(indent, "}", carriageReturn);
 	return builder.join("");
 }
