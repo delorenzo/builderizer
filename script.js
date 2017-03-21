@@ -1,5 +1,5 @@
 var indent = "    "; //4 spaces
-var carriageReturn = "\r\n";
+var carriageReturn = "\n";
     
 jQuery(document).ready(function() {
 	jQuery('button#builderize').click(function() {
@@ -83,6 +83,7 @@ function createBuilderClass(className, fields) {
 		var field = fields[i];
 		builder.push(indent, indent, "private ", field.type, " ", field.name, ";", carriageReturn);
 	}
+	builder.push(carriageReturn);
 	builder.push(indent, indent, "public ", builderName, "() {}", carriageReturn);
 	for (var i = 0; i < fields.length; i++) {
 		var field = fields[i];
