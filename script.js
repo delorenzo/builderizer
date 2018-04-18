@@ -32,7 +32,7 @@ function displayToast(message) {
 function builderize() {
 	var match;
 	var input = jQuery('textarea#input').val();
-	var pattern =/^([\S\s]*)((?:public |private |protected )?class\s*(\w+)(?: extends \w+)?(?: implements \w+)?\s*{)([\S\s]+)(})\s*$/;
+	var pattern =/^([\S\s]*)((?:public |private |protected )?class\s*(\w+)(?: extends [a-zA-Z0-9<>]+)?(?: implements [a-zA-Z0-9<>]+)?\s*{)([\S\s]+)(})\s*$/;
 	var output = [];
 	if (match = input.match(pattern)) {
 		output.push(match[1], match[2], match[4]);
